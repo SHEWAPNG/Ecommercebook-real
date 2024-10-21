@@ -1,64 +1,36 @@
-<<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>University E-Commerce Site</title>
-        <script src="script.js"></script>
-        <link rel="stylesheet" href="styles.css" />
-      </head>
-      <body>
-        <header>
-          <div class="logo">University Shop</div>
-          <nav>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Products</a></li>
-              <li><a href="#">Orders</a></li>
-              <li><a href="#">Customers</a></li>
-              <li><a href="#">Analytics</a></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our E-commerce Store</title>
+</head>
+<link rel="stylesheet" href="login.html">
+<body style="font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; margin: 0;">
+
+    <header style="background-color: #10123d; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="logo">My E-commerce Store</div>
+        <nav>
+            <ul style="list-style-type: none; display: flex; padding: 0; margin: 0;">
+                <li style="margin-left: 20px;"><a href="Log in.html" style="color: white; text-decoration: none;">Log in</a></li>
+                <li style="margin-left: 20px;"><a href="signup.html" style="color: white; text-decoration: none;">Sign Up</a></li>
             </ul>
-          </nav>
-        </header>
-    
-        <section class="hero">
-          <div class="hero-content">
-            <h1>Welcome to the University E-Shop</h1>
-            <p>Shop branded and institution-based products!</p>
-            <button>Explore Products</button>
-          </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="background-color: #101684; color: white; text-align: center; padding: 60px 20px;">
+            <h1 style="font-size: 2.5rem;">Elevate Your Mind, One Book at a Time</h1>
+            <p style="font-size: 1.2rem; margin: 20px 0;">Ignite Your Imagination with Every Turn of the Page</p>
+            <a href="Log in.html" class="cta-button" style="background-color: white; color: #1411a5; padding: 15px 30px; text-decoration: none; border-radius: 5px; transition: background-color 0.3s;">
+                Start Shopping
+            </a>
         </section>
-    
-        <section class="features">
-          <div class="feature-box">
-            <h2>Product Management</h2>
-            <p>Manage all the available products on the platform.</p>
-          </div>
-          <div class="feature-box">
-            <h2>Order Management</h2>
-            <p>Track and manage orders placed by customers.</p>
-          </div>
-          <div class="feature-box">
-            <h2>Customer Management</h2>
-            <p>View and manage customer information.</p>
-          </div>
-          <div class="feature-box">
-            <h2>Sales Analytics</h2>
-            <p>Analyze sales data to track performance.</p>
-          </div>
-        </section>
-    
-        <section id="book-list" class="book-list">
-          <h2>Available Books</h2>
-          <div id="books"></div>
-          <!-- Placeholder for books -->
-        </section>
-    
-        <footer>
-          <p>&copy; 2024 University E-Shop. All Rights Reserved.</p>
-        </footer>
-    
-        <!-- Link to your JavaScript file -->
-        
-      </body>
-    </html>
+    </main>
+
+    <footer style="background-color: #10123d; color: white; text-align: center; padding: 10px 0;">
+        <p>&copy; 2024 The Book Boutique Store. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

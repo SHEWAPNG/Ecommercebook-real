@@ -1,180 +1,79 @@
-[13:13, 10/1/2024] Adesewa56: 
-// Replace with your actual API key
+// Google Books API Key
 const apiKey = "AIzaSyADGOJhYuyNW0giKVualamYVZkT9u46PSc";
 
-// The query to search for books. You can change this to whatever topic you like
-const query = "architecture";
+// Function to fetch and display books from Google Books API
+function fetchBooks(searchQuery) {
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&key=${apiKey}`;
 
-// URL to fetch data from Google Books API
-const url = https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey};
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      const books = data.items || []; // Store the fetched books data
+      displayBooks(books); // Display books based on the search
+    })
+    .catch((error) => {
+      console.error("Error fetching books:", error);
+      document.getElementById("books").innerHTML = "<p>Error loading books.</p>";
+    });
+}
 
-// Fetch data from the API
-fetch(url)
-  .then((response) => {
-    // Check if the response is okay (status code 200)
-    if (!response.ok) {
-      throw new Error("Network response was not ok " + response.statusText);
-    }
-    return response.json(); // Convert the response to JSON
-  })
-  .then((data) => {
-    const booksContainer = document.getElementById("books");
+// Display books on the page
+function displayBooks(books) {
+  const booksContainer = document.getElementById("books");
+  booksContainer.innerHTML = ""; // Clear previous content
 
-    // Check if there are any items in the response
-    if (data.items && data.items.length > 0) {
-      // Loop through each book in the response
-      data.items.forEach((book) => {
-        // Extract relevant book information
-        const title = book.volumeInfo.title;
-        const authors = book.volumeInfo.authors
-          ? book.volumeInfo.authors.join(", ")
-          : "Unknown Author";
-        const thumbnail = book.volumeInfo.imageLinks
-          ? book.volumeInfo.imageLinks.thumbnail
-          : "";
+  if (books.length > 0) {
+    books.forEach((book) => {
+      const title = book.volumeInfo.title || "No Title Available";
+      const authors = book.volumeInfo.authors
+        ? book.volumeInfo.authors.join(", ")
+        : "Unknown Author";
+      const thumbnail = book.volumeInfo.imageLinks
+        ? book.volumeInfo.imageLinks.thumbnail
+        : "no-image.png"; // Placeholder if no image available
+      const price = (Math.random() * 100).toFixed(2); // Random price for demo
 
-        // Create HTML for each book and add it to the books container
-        booksContainer.innerHTML += `
-                    <div class="book-box">
-                        <h3>${title}</h3>
-                        <p>Author(s): ${authors}</p>
-                        ${
-                          thumbnail
-                            ? <img src="${thumbnail}" alt="${title}">
-                            : "<p>No image available</p>"
-                        }
-                    </div>
-                `;
-      });
-    } else {
-      booksContainer.innerHTML = "<p>No books found.</p>"; // Message if no books are returned
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching books:", error);
-    const booksContainer = document.getElementById("books");
-    booksContainer.innerHTML =
-      "<p>Error fetching books. Please try again later.</p>"; // Error message
-  });
-[14:18, 10/1/2024] Adesewa56: <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>University E-Commerce Site</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <div class="logo">University Shop</div>
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Products</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="#">Customers</a></li>
-          <li><a href="#">Analytics</a></li>
-        </ul>
-      </nav>
-    </header>
+      const bookItem = document.createElement("div");
+      bookItem.className = "book-item";
+      bookItem.innerHTML = `
+        <img src="${thumbnail}" alt="${title}">
+        <h3>${title}</h3>
+        <p>Author(s): ${authors}</p>
+        <p>Price: $${price}</p>
+        <button onclick="addToCart('${title}', '${authors}', ${price}, '${thumbnail}')">Add to Cart</button>
+      `;
 
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Welcome to the University E-Shop</h1>
-        <p>Shop branded and institution-based products!</p>
-        <button>Explore Products</button>
-      </div>
-    </section>
+      booksContainer.appendChild(bookItem);
+    });
+  } else {
+    booksContainer.innerHTML = "<p>No books found.</p>";
+  }
+}
 
-    <section class="features">
-      <div class="feature-box">
-        <h2>Product Management</h2>
-        <p>Manage all the available products on the platform.</p>
-      </div>
-      <div class="feature-box">
-        <h2>Order Management</h2>
-        <p>Track and manage orders placed by customers.</p>
-      </div>
-      <div class="feature-box">
-        <h2>Customer Management</h2>
-        <p>View and manage customer information.</p>
-      </div>
-      <div class="feature-box">
-        <h2>Sales Analytics</h2>
-        <p>Analyze sales data to track performance.</p>
-      </div>
-    </section>
+// Search books based on the user's input
+function searchBooks() {
+  const searchQuery = document.getElementById("searchInput").value;
+  if (searchQuery) {
+    fetchBooks(searchQuery); // Fetch books from API based on search query
+  } else {
+    alert("Please enter a search term.");
+  }
+}
 
-    <section id="book-list" class="book-list">
-      <h2>Available Books</h2>
-      <div id="books"></div>
-      <!-- Placeholder for books -->
-    </section>
+// Add book to cart
+function addToCart(title, author, price, image) {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  cartItems.push({ title, author, price, image });
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-    <footer>
-      <p>&copy; 2024 University E-Shop. All Rights Reserved.</p>
-    </footer>
+  // Show alert that the book has been added to the cart
+  alert(`${title} has been added to your cart!`);
 
-    <!-- Link to your JavaScript file -->
-    <script src="script.js"></script>
-  </body>
-</html>
-[14:23, 10/1/2024] Adesewa56: // script.js
+  // Redirect to the cart page
+  window.location.href = 'cart.html'; // Make sure this path points to your actual cart page
+}
 
-// Replace with your actual API key
-const apiKey = "AIzaSyADGOJhYuyNW0giKVualamYVZkT9u46PSc";
 
-// The query to search for books. You can change this to whatever topic you like
-const query = "architecture";
 
-// URL to fetch data from Google Books API
-const url = https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey};
 
-// Fetch data from the API
-fetch(url)
-  .then((response) => {
-    // Check if the response is okay (status code 200)
-    if (!response.ok) {
-      throw new Error("Network response was not ok " + response.statusText);
-    }
-    return response.json(); // Convert the response to JSON
-  })
-  .then((data) => {
-    const booksContainer = document.getElementById("books");
 
-    // Check if there are any items in the response
-    if (data.items && data.items.length > 0) {
-      // Loop through each book in the response
-      data.items.forEach((book) => {
-        // Extract relevant book information
-        const title = book.volumeInfo.title;
-        const authors = book.volumeInfo.authors
-          ? book.volumeInfo.authors.join(", ")
-          : "Unknown Author";
-        const thumbnail = book.volumeInfo.imageLinks
-          ? book.volumeInfo.imageLinks.thumbnail
-          : "";
-
-        // Create HTML for each book and add it to the books container
-        booksContainer.innerHTML += `
-                    <div class="book-box">
-                        <h3>${title}</h3>
-                        <p>Author(s): ${authors}</p>
-                        ${
-                          thumbnail
-                            ? <img src="${thumbnail}" alt="${title}">
-                            : "<p>No image available</p>"
-                        }
-                    </div>
-                `;
-      });
-    } else {
-      booksContainer.innerHTML = "<p>No books found.</p>"; // Message if no books are returned
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching books:", error);
-    const booksContainer = document.getElementById("books");
-    booksContainer.innerHTML =
-      "<p>Error fetching books. Please try again later.</p>"; // Error message
-  });
