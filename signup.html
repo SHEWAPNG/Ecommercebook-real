@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
- 
+
 <div class="form-container">
   <p class="title">Sign Up</p>
-  <form class="form">
+  <form id="signupForm" class="form">
     <div class="input-group">
       <label for="username">Username</label>
-      <input type="text" name="username" id="username" placeholder="Enter your username" required>
+      <input type="text" name="username" id="name" placeholder="Enter your username" required>
     </div>
     <div class="input-group">
       <label for="email">Email</label>
@@ -27,8 +27,7 @@
       <label for="confirm-password">Confirm Password</label>
       <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
     </div>
-    <!-- Add an id to the button -->
-    <button class="sign" id="signUpBtn" type="button">Sign Up</button>
+    <button class="sign" id="signUpBtn" type="submit">Sign Up</button>
   </form>
 
   <div class="social-message">
@@ -54,16 +53,50 @@
     </button>
   </div>
   <p class="signup">Already have an account?
-    <a rel="noopener noreferrer" href="login.html">Log in</a>
+    <a rel="noopener noreferrer" href="Log in.html">Log in</a>
   </p>
 </div>
 
 <script>
-  // JavaScript for the redirect
-  document.getElementById('signUpBtn').onclick = function () {
-      // This will redirect users to the homepage
-      window.location.href = 'home.html';
-  };
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Get user input
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    // Validate user input
+    if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+    }
+
+    // Check email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address!');
+        return;
+    }
+
+    // Check password strength
+    if (password.length < 6) {
+        alert('Password must be at least 6 characters long!');
+        return;
+    }
+
+    // Store user data in localStorage
+    localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+
+    // Clear input fields
+    document.getElementById('signupForm').reset();
+
+    // Redirect to login page
+    window.location.href = 'Log in.html';
+});
 </script>
 
 </body>
