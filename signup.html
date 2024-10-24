@@ -27,8 +27,10 @@
       <label for="confirm-password">Confirm Password</label>
       <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
     </div>
-    <button class="sign" type="submit">Sign Up</button>
+    <!-- Add an id to the button -->
+    <button class="sign" id="signUpBtn" type="button">Sign Up</button>
   </form>
+
   <div class="social-message">
     <div class="line"></div>
     <p class="message">Sign up with social accounts</p>
@@ -55,5 +57,14 @@
     <a rel="noopener noreferrer" href="login.html">Log in</a>
   </p>
 </div>
+
+<script>
+  // JavaScript for the redirect
+  document.getElementById('signUpBtn').onclick = function () {
+      // This will redirect users to the homepage
+      window.location.href = 'home.html';
+  };
+</script>
+
 </body>
 </html>
